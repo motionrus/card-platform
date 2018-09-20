@@ -1,4 +1,7 @@
 
+-- Card Platform: reated by Ruslan Tyutin
+--   Description: This project is designed to work with the card platform.
+--                By generating pin codes, we can allow authorization and missed calls
 
 
 function number(password)
@@ -21,6 +24,9 @@ function number(password)
 end;
 
 local read_password = function (context, extension)
+    -- func ask password, if data correct
+    -- make dial
+    -- else say error
     app.read("DIGITS","ru/vm-reenterpassword")
     local password = channel["DIGITS"]:get();
     local check = number(password);
@@ -37,7 +43,7 @@ local read_password = function (context, extension)
 end;
 
 function check_login_password(login, password)
-    -- body
+    -- if login and password right, return true
     numbers = {
         ["501000"] = "803297",
         ["501001"] = "331884",
@@ -56,6 +62,9 @@ function check_login_password(login, password)
 end;
 
 local read_number_password = function (context, extension)
+    -- function ask number and password
+    -- if data is correct, then make dial
+    -- else say error 
     app.read("login","/var/menu/vm-enter-num-to-call")
     local login = channel["login"]:get();
     app.read("password","ru/vm-reenterpassword")
@@ -71,13 +80,17 @@ local read_number_password = function (context, extension)
         app.playback("ru/followme/sorry")
         app.hangup();
     end;
-    -- body
 end;
 
 
 extensions = {
     ["cardplatform"] = {
-
+        -- you may choice read_number_password or read_password
+        -- it's realize 2 scheme now
+        -- 1.Authorization by 6-digit pin-code. With the pin-code binding to the number and 
+        -- the exit to the uplink (read_password)
+        -- 2.Authorization by 6-digit number and 6-digit pin-code. With access to the uplink
+        -- (read_number_password)
         ["_8X."] = read_number_password;
         ["_7X."] = read_number_password;
     };
