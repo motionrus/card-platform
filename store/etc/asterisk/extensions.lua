@@ -1,5 +1,5 @@
 
--- Card Platform: reated by Ruslan Tyutin
+-- Card Platform: created by Ruslan Tyutin
 --   Description: This project is designed to work with the card platform.
 --                By generating pin codes, we can allow authorization and missed calls
 
